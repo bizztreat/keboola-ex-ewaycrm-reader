@@ -8,7 +8,7 @@ This app serves as an extractor. Calls an API endpoint of the eWay CRM systems a
 2.   extractor
 3.   App provide features to read data from eWay API
 4.   
-5.   TODO icon
+5.   ./eway-logo.png
 6.   Bizztreat s.r.o.
 7.   Bubenská 1477/1, Praha, CZ
 8.   david.chobotsky@bizztreat.com
