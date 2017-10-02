@@ -76,12 +76,55 @@ This app serves as an extractor. Calls an API endpoint of the eWay CRM systems a
 ### Configuration schema
 ```
 {
-  "webServiceAddress": "web-service-endpoint",
-  "username": "your-account",
-  "#password": "your-secret-password",
-  "passwordAlreadyEncrypted": [true/false],
-  "dieOnItemConflict": [true/false],
-  "apiFunction": [getCompanies, getProjects]
+  "configurationSchema": {
+    "type": "object",
+    "title": "Parameters",
+    "required": [
+      "webServiceAddress",
+      "username",
+      "#password",
+      "apiFunction"
+    ],
+    "properties": {
+      "webServiceAddress": {
+        "type": "string",
+        "title": "API endpoint",
+        "default": "",
+        "minLength": 1
+      },
+      "username": {
+        "type": "string",
+        "title": "Username",
+        "default": "",
+        "minLength": 1
+      },
+      "#password": {
+        "type": "string",
+        "title": "Password",
+        "format": "password",
+        "default": "",
+        "minLength": 4
+      },
+      "apiFunction": {
+        "type": "string",
+        "title": "API Function",
+        "default": "",
+        "minLength": 1
+      },
+      "passwordAlreadyEncrypted": {
+        "type": "boolean",
+        "title": "Password Already Encrypted",
+        "format": "checkbox",
+        "default": "false"
+      },
+      "dieOnItemConflict": {
+        "type": "boolean",
+        "title": "Die On Item Conflict",
+        "format": "checkbox",
+        "default": "false"
+       }
+    }
+  }
 }
 ```
 [Details here](https://github.com/bizztreat/keboola-ex-ewaycrm-reader/blob/master/MANUAL.md)
