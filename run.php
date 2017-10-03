@@ -28,7 +28,7 @@ try {
     $webServiceAddress = $config['parameters']['webServiceAddress'];
     $username = $config['parameters']['username'];
     $password = $config['parameters']['#password'];
-    $passwordAlreadyEncrypted = $config['parameters']['passwordAlreadyEncrypted'];
+    $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
     $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
     $apiFunction = $config['parameters']['apiFunction'];
 
