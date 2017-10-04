@@ -1,6 +1,39 @@
 # keboola-ex-ewaycrm-reader
 This app serves as an extractor. Calls an API endpoint of the eWay CRM systems and gets the data back.
 
+# Docker image instructions
+
+AWS ECR
+registry: 147946154733.dkr.ecr.us-east-1.amazonaws.com
+repository: developer-portal-v2/bizztreat.ex-eway-crm-reader
+
+You may need to login first:
+```
+docker login -u AWS -p <pwd> https://<registry>
+```
+
+Password you will get from API call here:
+https://apps-api.keboola.com/vendors/bizztreat/apps/bizztreat.ex-eway-crm-reader/repository
+but you need to have a auth token from here:
+https://apps-api.keboola.com/auth/login
+
+more info here:
+https://developers.keboola.com/extend/docker/tutorial/automated-build/
+
+
+After any change of code run to build a new image:
+```
+docker build --tag=<AWS-registry>/<repository> --no-cache .
+```
+
+Then to push a new version of image to AWS ECR repository:
+```
+docker push <AWS-registry>/<repository>
+```
+
+
+
+
 # Checklist
 
 0.   bizztreat
