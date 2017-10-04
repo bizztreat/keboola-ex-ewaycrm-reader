@@ -32,15 +32,17 @@ try {
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
     $dieOnItemConflict = false; //$config['parameters']['dieOnItemConflict'];
 
-    print "version: 1.1" . $NL;
+    print "version: 1.2" . $NL;
     print "host: " . $webServiceAddress . $NL;
 //    print "username: " . (! empty($username)) ? "*****" . $NL : "!!! EMPTY !!!" . $NL;
 //    print "password: " . (! empty($password)) ? "*****" . $NL : "!!! EMPTY !!!" . $NL;
 //    print "apiFunction: " . $apiFunction . $NL;
+    print "passwordAlreadyEncrypted: " . $passwordAlreadyEncrypted . $NL;
     print "dieOnItemConflict: " . $dieOnItemConflict . $NL;
 
     // Create eWay API connector
-    $connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict);
+    //$connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict);
+    $connector = new eWayConnector($webServiceAddress, $username, $password, false, false);
 
     switch ($apiFunction) {
         case "getCompanies":
