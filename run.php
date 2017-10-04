@@ -28,15 +28,16 @@ try {
     $webServiceAddress = $config['parameters']['webServiceAddress'];
     $username = $config['parameters']['username'];
     $password = $config['parameters']['#password'];
+    $apiFunction = $config['parameters']['apiFunction'];
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
     $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
-    $apiFunction = $config['parameters']['apiFunction'];
+    $dieOnItemConflict = ($dieOnItemConflict == 1) ? true : false;
 
     print "host: " . $webServiceAddress . $NL;
-    print "username: " . (! empty($username)) ? "*****" : "!!! EMPTY !!!" . $NL;
-    print "password: " . (! empty($password)) ? "*****" : "!!! EMPTY !!!" . $NL;
+//    print "username: " . (! empty($username)) ? "*****" . $NL : "!!! EMPTY !!!" . $NL;
+//    print "password: " . (! empty($password)) ? "*****" . $NL : "!!! EMPTY !!!" . $NL;
+//    print "apiFunction: " . $apiFunction . $NL;
     print "dieOnItemConflict: " . $dieOnItemConflict . $NL;
-    print "apiFunction: " . $apiFunction . $NL;
 
     // Create eWay API connector
     $connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict);
