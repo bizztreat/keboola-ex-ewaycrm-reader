@@ -33,8 +33,10 @@ try {
     $apiFunction = $config['parameters']['apiFunction'];
 
     print "host: " . $webServiceAddress . $NL;
-    print "user: " . $username . $NL;
-    print "pass: " . $password . $NL;
+    print "username: " . (! empty($username)) ? "*****" : "!!! EMPTY !!!" . $NL;
+    print "password: " . (! empty($password)) ? "*****" : "!!! EMPTY !!!" . $NL;
+    print "dieOnItemConflict: " . $dieOnItemConflict . $NL;
+    print "apiFunction: " . $apiFunction . $NL;
 
     // Create eWay API connector
     $connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict);
