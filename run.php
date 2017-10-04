@@ -69,13 +69,13 @@ try {
                 break;
             case "getProjects":
                 print "Writing Projects to Keboola ..." . $NL;
-                fputcsv($fhOut, ['ItemGUID', 'ItemVersion', 'ProjectName', 'CisloZakazky', 'MRPID'], ',', '"');
+                fputcsv($fhOut, ['ItemGUID', 'ItemVersion', 'ProjectName', 'OrderNumber', 'MRPID'], ',', '"');
                 foreach ($result->Data as $record) {
                     fputcsv($fhOut, [
                         $record->ItemGUID,
                         $record->ItemVersion,
                         $record->ProjectName,
-                        $record->AdditionalFields->af_26, // Cislo zakazky
+                        $record->AdditionalFields->af_26, // OrderNumber
                         $record->AdditionalFields->af_24 // MRPID
                     ], ',', '"');
                 }
