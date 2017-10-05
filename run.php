@@ -9,7 +9,6 @@ require_once "eway/eway.class.php";
 
 $NL = "\r\n";
 
-$fileOutPath = "/data/out/tables/destination.csv";
 $arguments = getopt("d::", array("data::"));
 
 //print_r($arguments);
@@ -18,13 +17,8 @@ if (!isset($arguments["data"])) {
     exit(1);
 }
 
-if (!file_exists($fileOutPath)) {
-    print "File not found.";
-    exit(1);
-}
-
 try {
-    $fileOut = fopen($fileOutPath, 'w');
+    $fileOut = fopen('/data/out/tables/destination.csv', 'w');
     if (!$fileOut) {
         print "File open failed.";
         exit(1);
