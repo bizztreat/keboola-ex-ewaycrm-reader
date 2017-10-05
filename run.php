@@ -9,17 +9,27 @@ require_once "eway/eway.class.php";
 
 $NL = "\r\n";
 
-// Validation
+$fileOutPath = "/data/out/tables/destination.csv";
 $arguments = getopt("d::", array("data::"));
+
 //print_r($arguments);
 if (!isset($arguments["data"])) {
     print "Data folder not set.";
     exit(1);
 }
 
-$fhOut = fopen('/data/out/tables/destination.csv', 'w');
+if (!file_exists($fileOutPath)) {
+    print "File not found.";
+    exit(1);
+}
 
 try {
+    $fileOut = fopen($fileOutPath, 'w');
+    if (!$fileOut) {
+        print "File open failed.";
+        exit(1);
+    }
+
     $dataDir = $arguments["data"] . DIRECTORY_SEPARATOR;
     $configFile = $dataDir . 'config.json';
 
@@ -29,20 +39,14 @@ try {
     $username = $config['parameters']['username'];
     $password = $config['parameters']['#password'];
     $apiFunction = $config['parameters']['apiFunction'];
+    $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
-    $dieOnItemConflict = false; //$config['parameters']['dieOnItemConflict'];
 
-    print "version: 1.2" . $NL;
+    print "version: 1.0.0" . $NL;
     print "host: " . $webServiceAddress . $NL;
-//    print "username: " . (! empty($username)) ? "*****" . $NL : "!!! EMPTY !!!" . $NL;
-//    print "password: " . (! empty($password)) ? "*****" . $NL : "!!! EMPTY !!!" . $NL;
-//    print "apiFunction: " . $apiFunction . $NL;
-    print "passwordAlreadyEncrypted: " . $passwordAlreadyEncrypted . $NL;
-    print "dieOnItemConflict: " . $dieOnItemConflict . $NL;
 
     // Create eWay API connector
-    //$connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict);
-    $connector = new eWayConnector($webServiceAddress, $username, $password, false, false);
+    $connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict);
 
     switch ($apiFunction) {
         case "getCompanies":
@@ -61,10 +65,10 @@ try {
     if ($result->ReturnCode == 'rcSuccess') {
         switch ($apiFunction) {
             case "getCompanies":
-                print "Writing Companies to Keboola ..." . $NL;
-                fputcsv($fhOut, ['ItemGUID', 'ItemVersion', 'IdentificationNumber', 'CompanyName', 'MRPID'], ',', '"');
+                print "Writing Companies to Keboola storage ..." . $NL;
+                fputcsv($fileOut, ['ItemGUID', 'ItemVersion', 'IdentificationNumber', 'CompanyName', 'MRPID'], ',', '"');
                 foreach ($result->Data as $record) {
-                    fputcsv($fhOut, [
+                    fputcsv($fileOut, [
                         $record->ItemGUID,
                         $record->ItemVersion,
                         $record->IdentificationNumber,
@@ -74,10 +78,10 @@ try {
                 }
                 break;
             case "getProjects":
-                print "Writing Projects to Keboola ..." . $NL;
-                fputcsv($fhOut, ['ItemGUID', 'ItemVersion', 'ProjectName', 'OrderNumber', 'MRPID'], ',', '"');
+                print "Writing Projects to Keboola storage ..." . $NL;
+                fputcsv($fileOut, ['ItemGUID', 'ItemVersion', 'ProjectName', 'OrderNumber', 'MRPID'], ',', '"');
                 foreach ($result->Data as $record) {
-                    fputcsv($fhOut, [
+                    fputcsv($fileOut, [
                         $record->ItemGUID,
                         $record->ItemVersion,
                         $record->ProjectName,
@@ -89,6 +93,7 @@ try {
         }
     } else {
         print "Unable to get data: " . $result->Description . $NL;
+        exit(1);
     }
 
 } catch (InvalidArgumentException $e) {
@@ -97,9 +102,9 @@ try {
 } catch (\Throwable $e) { // + $e
     print $e->getMessage();
     exit(2);
+} finally {
+    fclose($fileOut);
 }
-
-fclose($fhOut);
 
 print "Processed " . count($result->Data) . " rows." . $NL;
 exit(0);
