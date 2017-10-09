@@ -36,7 +36,7 @@ try {
     $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
 
-    print "version: 1.0.0" . $NL;
+    print "version: 1.0.1" . $NL;
     print "host: " . $webServiceAddress . $NL;
 
     // Create eWay API connector
@@ -67,7 +67,8 @@ try {
                         $record->ItemVersion,
                         $record->IdentificationNumber,
                         $record->CompanyName,
-                        $record->AdditionalFields->af_18 // MRPID
+                        $record->AdditionalFields->af_33 // MRPID
+//                        $record->AdditionalFields->af_18 // MRPID trial
                     ], ',', '"');
                 }
                 break;
@@ -79,8 +80,10 @@ try {
                         $record->ItemGUID,
                         $record->ItemVersion,
                         $record->ProjectName,
-                        $record->AdditionalFields->af_26, // OrderNumber
-                        $record->AdditionalFields->af_24 // MRPID
+//                        $record->AdditionalFields->af_26, // OrderNumber trial
+                        $record->AdditionalFields->af_25, // OrderNumber
+//                        $record->AdditionalFields->af_24 // MRPID trial
+                        $record->AdditionalFields->af_34 // MRPID
                     ], ',', '"');
                 }
                 break;

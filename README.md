@@ -32,7 +32,10 @@ docker push <AWS-registry>/<repository>
 ```
 
 
-
+Run locally and debug volume:
+```
+docker run --volume=/Users/.../:/data/ -i -t --entrypoint=/bin/bash <image>
+```
 
 # Checklist
 
