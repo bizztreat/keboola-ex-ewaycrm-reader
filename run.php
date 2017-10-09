@@ -67,7 +67,7 @@ try {
                         $record->ItemVersion,
                         $record->IdentificationNumber,
                         $record->CompanyName,
-                        $record->AdditionalFields->af_33 // MRPID
+                        isset($record->AdditionalFields->af_33) ? $record->AdditionalFields->af_33 : "" // MRPID
 //                        $record->AdditionalFields->af_18 // MRPID trial
                     ], ',', '"');
                 }
@@ -81,9 +81,9 @@ try {
                         $record->ItemVersion,
                         $record->ProjectName,
 //                        $record->AdditionalFields->af_26, // OrderNumber trial
-                        $record->AdditionalFields->af_25, // OrderNumber
+                        isset($record->AdditionalFields->af_25) ? $record->AdditionalFields->af_25 : "", // OrderNumber
 //                        $record->AdditionalFields->af_24 // MRPID trial
-                        $record->AdditionalFields->af_34 // MRPID
+                        isset($record->AdditionalFields->af_34) ? $record->AdditionalFields->af_34 : ""// MRPID
                     ], ',', '"');
                 }
                 break;
