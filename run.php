@@ -36,7 +36,7 @@ try {
     $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
 
-    print "version: 1.0.1" . $NL;
+    print "version: 1.1.0" . $NL;
     print "host: " . $webServiceAddress . $NL;
 
     // Create eWay API connector
@@ -51,8 +51,12 @@ try {
             print "Reading Projects from eWay CRM ..." . $NL;
             $result = $connector->getProjects();
             break;
+        case "getInvoices":
+            print "Reading Invoices from eWay CRM ..." . $NL;
+            $result = $connector->getCarts();
+            break;
         default:
-            print "Unknown eWay API call! try: getCompanies, getProjects." . $NL;
+            print "Unknown eWay API call! try: getCompanies, getProjects, getInvoices." . $NL;
             exit(1);
     }
 
@@ -84,6 +88,19 @@ try {
                         isset($record->AdditionalFields->af_25) ? $record->AdditionalFields->af_25 : "", // OrderNumber
 //                        $record->AdditionalFields->af_24 // MRPID trial
                         isset($record->AdditionalFields->af_34) ? $record->AdditionalFields->af_34 : ""// MRPID
+                    ], ',', '"');
+                }
+                break;
+            case "getInvoices":
+                print "Writing Invoices to Keboola storage ..." . $NL;
+                fputcsv($fileOut, ['ItemGUID', 'ItemVersion', 'InvoiceNumber', 'MRPID'], ',', '"');
+                foreach ($result->Data as $record) {
+                    fputcsv($fileOut, [
+                        $record->ItemGUID,
+                        $record->ItemVersion,
+                        $record->FileAs, // InvoiceNumber
+//                        $record->AdditionalFields->af_24??? // MRPID trial
+                        isset($record->AdditionalFields->af_35) ? $record->AdditionalFields->af_35 : ""// MRPID
                     ], ',', '"');
                 }
                 break;

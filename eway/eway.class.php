@@ -49,6 +49,16 @@ class eWayConnector
     }
 
     /**
+     * Gets all carts
+     *
+     * @return Json format with all carts
+     */
+    public function getCarts()
+    {
+        return $this->postRequest('GetCarts');
+    }
+
+    /**
      * Saves cart
      *
      * @param $cart Cart array data to save
