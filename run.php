@@ -115,7 +115,7 @@ try {
     exit(1);
 } catch (Exception $e) { // + $e
     print $e->getMessage();
-    exit(2);
+    exit(1);
 } finally {
     fclose($fileOut);
 }
