@@ -36,7 +36,7 @@ try {
     $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
 
-    print "version: 1.1.0" . $NL;
+    print "version: 1.2.0" . $NL;
     print "host: " . $webServiceAddress . $NL;
 
     // Create eWay API connector

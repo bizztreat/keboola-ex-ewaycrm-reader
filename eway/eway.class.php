@@ -571,8 +571,6 @@ class eWayConnector
             throw new Exception('Login failed: '.$jsonResult->Description);
         }
 
-        throw new Exception('DC Login failed: '.$jsonResult->Description);
-
         // Save this sessionId for next time
         $this->sessionId = $jsonResult->SessionId;
     }
