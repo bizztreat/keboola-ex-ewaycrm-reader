@@ -113,7 +113,7 @@ try {
 } catch (InvalidArgumentException $e) {
     print $e->getMessage();
     exit(1);
-} catch (\Throwable $e) { // + $e
+} catch (Exception $e) { // + $e
     print $e->getMessage();
     exit(2);
 } finally {
