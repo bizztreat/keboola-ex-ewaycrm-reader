@@ -632,8 +632,8 @@ class eWayConnector
         
         $result = curl_exec($ch);
         if($this->debugMode) { print "CURL result: "; print_r($result); }
+        if($result == null) throw new Exception('Request timeout!');
         $jsonResult = json_decode($result);
-        if($this->debugMode) { print "JSON decoded: "; print_r($jsonResult); }
         $returnCode = $jsonResult->ReturnCode;
         // Session timed out, re-log again
         if ($returnCode == 'rcBadSession') {
@@ -658,8 +658,8 @@ class eWayConnector
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonObject);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10); // in seconds
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); // in seconds
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60); // in seconds
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120); // in seconds
         return $ch;
     }
 }

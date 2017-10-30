@@ -34,10 +34,10 @@ try {
     $password = $config['parameters']['#password'];
     $apiFunction = $config['parameters']['apiFunction'];
     $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
-    $debugMode = $config['parameters']['debug'];
+    $debugMode = false; //$config['parameters']['debug'];
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
 
-    print "version: 1.2.2" . $NL;
+    print "version: 1.2.3" . $NL;
     print "host: " . $webServiceAddress . $NL;
 
     // Create eWay API connector
