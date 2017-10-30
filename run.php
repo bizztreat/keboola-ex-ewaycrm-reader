@@ -37,7 +37,7 @@ try {
     $debugMode = $config['parameters']['debug'];
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
 
-    print "version: 1.2.1" . $NL;
+    print "version: 1.2.2" . $NL;
     print "host: " . $webServiceAddress . $NL;
 
     // Create eWay API connector

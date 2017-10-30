@@ -659,7 +659,7 @@ class eWayConnector
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonObject);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10); // in seconds
-        curl_setopt($ch, CURLOPT_CONNECTIONTIMEOUT, 30); // in seconds
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); // in seconds
         return $ch;
     }
 }
