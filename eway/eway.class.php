@@ -14,6 +14,7 @@ class eWayConnector
     private $username;
     private $passwordHash;
     private $dieOnItemConflict;
+    private $debugMode;
 
     /**
      * Initialize eWayConnector class
@@ -27,7 +28,7 @@ class eWayConnector
      * @throws Exception If username is empty
      * @throws Exception If password is empty
      */
-    function __construct($webServiceAddress, $username, $password, $passwordAlreadyEncrypted = false, $dieOnItemConflict = false)
+    function __construct($webServiceAddress, $username, $password, $passwordAlreadyEncrypted = false, $dieOnItemConflict = false, $debug = false)
     {
         if (empty($webServiceAddress))
             throw new Exception('Empty web service address');
@@ -41,6 +42,7 @@ class eWayConnector
         $this->webServiceAddress = $webServiceAddress;
         $this->username = $username;
         $this->dieOnItemConflict = $dieOnItemConflict;
+        $this->debugMode= $debug;
 
         if ($passwordAlreadyEncrypted)
             $this->passwordHash = $password;
@@ -629,7 +631,9 @@ class eWayConnector
         $ch = $this->createPostRequest($url, $jsonObject);
         
         $result = curl_exec($ch);
+        if($this->debugMode) { print "CURL result: "; print_r($result); }
         $jsonResult = json_decode($result);
+        if($this->debugMode) { print "JSON decoded: "; print_r($jsonResult); }
         $returnCode = $jsonResult->ReturnCode;
         // Session timed out, re-log again
         if ($returnCode == 'rcBadSession') {
@@ -654,6 +658,8 @@ class eWayConnector
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonObject);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10); // in seconds
+        curl_setopt($ch, CURLOPT_CONNECTIONTIMEOUT, 30); // in seconds
         return $ch;
     }
 }

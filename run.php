@@ -34,13 +34,14 @@ try {
     $password = $config['parameters']['#password'];
     $apiFunction = $config['parameters']['apiFunction'];
     $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
+    $debugMode = $config['parameters']['debug'];
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
 
-    print "version: 1.2.0" . $NL;
+    print "version: 1.2.1" . $NL;
     print "host: " . $webServiceAddress . $NL;
 
     // Create eWay API connector
-    $connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict);
+    $connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict, $debugMode);
 
     switch ($apiFunction) {
         case "getCompanies":
