@@ -1,5 +1,9 @@
 # keboola-ex-ewaycrm-reader
-This app serves as an extractor. Calls an API endpoint of the eWay CRM systems and gets the data back.
+This app serves as an extractor. It calls an API endpoint of the eWay CRM systems and gets the data back.
+
+
+
+
 
 # Docker image instructions
 
