@@ -578,11 +578,13 @@ class eWayConnector
             $attempts--;
         }
 
+        if($result == null) throw new Exception('Request timeout!');
+
         $jsonResult = json_decode($result);
         $returnCode = $jsonResult->ReturnCode;
 
         if ($returnCode != 'rcSuccess') {
-            print $jsonResult;
+            print_r($jsonResult);
             throw new Exception('Login failed: '.$jsonResult->Description);
         }
 
@@ -645,7 +647,17 @@ class eWayConnector
         
         $result = curl_exec($ch);
         if($this->debugMode) { print "CURL result: "; print_r($result); }
+        $attempts = 3;
+        while($result == null && $attempts >= 0) {
+            print "Request result NULL! Next attempt. \r\n";
+            print "Sleeping 10s ... \r\n";
+            sleep(10);
+            $result = curl_exec($ch);
+            $attempts--;
+        }
+
         if($result == null) throw new Exception('Request timeout!');
+
         $jsonResult = json_decode($result);
         $returnCode = $jsonResult->ReturnCode;
         // Session timed out, re-log again
