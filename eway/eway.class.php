@@ -566,19 +566,23 @@ class eWayConnector
 
         $jsonObject = json_encode($login, true);
         $ch = $this->createPostRequest($this->createWebServiceUrl('Login'), $jsonObject);
-
         $result = curl_exec($ch);
+
         if($this->debugMode) { print "CURL result: "; print_r($result); }
-        if($result == null) {
-            print "CURL result: ";
-            print_r($result);
-            throw new Exception('Request timeout!');
+        $attempts = 3;
+        while($result == null && $attempts >= 0) {
+            print "Request result NULL! Next attempt. \r\n";
+            print "Sleeping 10s ... \r\n";
+            sleep(10);
+            $result = curl_exec($ch);
+            $attempts--;
         }
 
         $jsonResult = json_decode($result);
         $returnCode = $jsonResult->ReturnCode;
 
         if ($returnCode != 'rcSuccess') {
+            print $jsonResult;
             throw new Exception('Login failed: '.$jsonResult->Description);
         }
 
