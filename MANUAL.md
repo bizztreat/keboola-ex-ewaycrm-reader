@@ -47,12 +47,6 @@ we will help you with enhancements. Custom fields will be always different in yo
 
 ## Configuration
 
-### Output mapping
-
-Use path `/data/out/tables/destination.csv` as File in output mapping.
-For destination bucket use according your needs.
-
-
 ### Parameters
 
 <pre>
