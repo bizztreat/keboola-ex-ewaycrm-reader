@@ -37,7 +37,7 @@ try {
     $debugMode = false; //$config['parameters']['debug'];
     $passwordAlreadyEncrypted = false; //$config['parameters']['passwordAlreadyEncrypted'];
 
-    print "version: 1.2.5" . $NL;
+    print "version: 1.3.0" . $NL;
     print "host: " . $webServiceAddress . $NL;
 
     // Create eWay API connector
@@ -111,6 +111,12 @@ try {
         exit(1);
     }
 
+    // Manifest
+    $manifest->incremental = true;
+    $manifest->primary_key = ["ItemGUID"];
+    $fileOutManifest = fopen($dataDir . '/out/tables/destination.csv.manifest', 'w');
+    fwrite($fileOutManifest, json_encode($manifest));
+
 } catch (InvalidArgumentException $e) {
     print $e->getMessage();
     exit(1);
@@ -119,6 +125,7 @@ try {
     exit(1);
 } finally {
     fclose($fileOut);
+    fclose($fileOutManifest);
 }
 
 print "Processed " . count($result->Data) . " rows." . $NL;
