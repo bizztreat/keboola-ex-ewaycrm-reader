@@ -112,6 +112,7 @@ try {
     }
 
     // Manifest
+    $manifest = new stdClass();
     $manifest->incremental = true;
     $manifest->primary_key = ["ItemGUID"];
     $fileOutManifest = fopen($dataDir . '/out/tables/destination.csv.manifest', 'w');
